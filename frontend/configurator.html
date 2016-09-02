@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Autolayout configurator</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body class="config">
+	<form class="configurator">
+		<label for="racer1">Racer 1</label><input type="text" id="racer1" placeholder="mudjoe2">
+		<label for="racer2">Racer 2</label><input type="text" id="racer2" placeholder="inverttttttt">
+		<p>
+			Since the video has a little delay, you can adjust here for the timer and lutes to not appear too early.
+			<label for="delay">Delay in ms</label><input type="number" id="delay" value="0">
+		</p>
+
+		<p>
+			If you are doing a cawmunity cast, this is not recommended since flash will eat up all your rem. Please <a href="https://docs.google.com/document/d/1nyhTCJnR8-gBTB8ZdGPosGMGixl0KOCJRfNohoFhRXU" target="_blank">check macSG</a> for getting the streams instead.
+			<br><label for="streams">Show streams</label> <input type="checkbox" id="streams">
+		</p>
+		<p>
+			<label for="streamBG">Change background to green (for streaming)</label> <input type="checkbox" id="streamBG" checked>
+		</p>
+		<p>
+			<label for="timer">Show timer</label> <input type="checkbox" id="timer" checked>
+		</p>
+		<p>
+			<label for="show-lutes">Show lutes</label> <input type="checkbox" id="show-lutes" checked>
+		</p>
+		<p>
+			<label for="bg">Background</label> <input type="text" id="bg" value="cawmunity">
+		</p>
+		<p>
+			<label for="lutes">Lutes</label> <input type="text" id="lutes" value="default">
+		</p>
+
+	</form>
+	<a href="/" class="link">Watch</a>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		var makeLink = function() {
+			var link ='/#',
+				racer1 = $('#racer1').val(),
+				racer2 = $('#racer2').val();
+			if(racer1 && racer2) {
+				link += racer1 + '/' + racer2;
+			}
+			link+='|'+$('#delay').val()+'|'+($('#streams').is(':checked')?'1':'0')+($('#streamBG').is(':checked')?'1':'0')+($('#timer').is(':checked')?'1':'0')+($('#show-lutes').is(':checked')?'1':'0')+'|'+$('#bg').val()+'|'+$('#lutes').val();
+			$('.link').attr('href', link);
+		};
+		$('.configurator').on('change', makeLink);
+		makeLink();
+	</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+@font-face {
+    font-family: 'necrosansregular';
+    src: url('necrosans-webfont.woff2') format('woff2'),
+         url('necrosans-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+	background-color: #000;
+	color: #fff;
+	margin: 0;
+	height: 100%;
+	font-family: 'necrosansregular';
+}
+
+a {
+	color: #ddd;
+}
+a:visited {
+	color: #aaa;
+}
+
+.stream-bg {
+	background-color: #0f0;
+}
+
+.loading, .config {
+	width: 80vw;
+	font-size: 2vw;
+	margin: 0 auto;
+	padding: 5vw 0;
+}
+
+.config {
+	font-family: monospace;
+	font-size: 1.5rem;
+}
+
+input {
+	background: #000;
+	color: #fff;
+	border: 1px solid #eee;
+	margin: 0 10px;
+	padding: 5px;
+}
+
+.layout {
+	width: 100%;
+	height: 56.25vw;
+	position: relative;
+	display: none;
+}
+
+.background {
+	background-image: url(../img/backgrounds/cawmunity.png);
+	background-repeat: no-repeat;
+	background-size: 100%; 
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.racer {
+	box-sizing: border-box;
+	position: absolute;
+	width: 50%;
+	top: 31.56%;
+    bottom: 19.6%;
+}
+
+
+.left-racer-name, .right-racer-name {
+	box-sizing: border-box;
+	position: absolute;
+	width: 50%;
+	text-align: center;
+	line-height: 4.2vw;
+	font-size: 3vw;
+	top: 23%;
+}
+
+.left-racer-name, 
+.left-racer {
+	left: 0;
+	padding-right: .3%;
+	padding-left: .8%;
+}
+
+.right-racer-name,
+.right-racer {
+	right: 0;
+	padding-left: .3%;
+	padding-right: .8%;
+}
+
+.player {
+	width: 100%;
+	height: 27.5vw;
+	text-align: center;
+	line-height: 27.5vw;
+	font-size: 2vw;
+}
+
+.lute {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: 100%; 
+	pointer-events: none;
+}
+
+.timer {
+	position: absolute;
+	top: 82.2%;
+	bottom: 10.6%;
+	left: 39.1%;
+	width: 21.9%;
+	text-align: center;
+	line-height: 4.2vw;
+	font-size: 3vw;
+}
+
+.timer span {
+	display: inline-block;
+	width: 1.8vw;
+	text-align: center;
+}
