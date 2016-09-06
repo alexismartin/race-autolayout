@@ -22,14 +22,14 @@ var getInit = function(race) {
             } else {
                 var racers = [];
                 for(var i = 0; i < currentRaces.length; i++) {
-                    racers.push({racers: [currentRaces[i].racer1, currentRaces[i].racer2], score: [currentRaces[i].points1, currentRaces[i].points2], timer: currentRaces[i].start?Date.now()-currentRaces[i].start:0});
+                    racers.push({racers: [currentRaces[i].racer1, currentRaces[i].racer2], score: [currentRaces[i].points1||0, currentRaces[i].points2||0], timer: currentRaces[i].start?Date.now()-currentRaces[i].start:0});
                 }
                 if(racers.length) return {multi: true, races: racers};
             }
         }
     }
     if(!race) return false;
-    else return {racers: [race.racer1, race.racer2], score: [race.points1, race.points2], timer: race.start?Date.now()-race.start:0};
+    else return {racers: [race.racer1, race.racer2], score: [race.points1||0, race.points2||0], timer: race.start?Date.now()-race.start:0};
 }
  
 server.listen(8080, function() {
@@ -62,7 +62,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: racestart', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2) {
+        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
             race = races[i];
             break;
         }
@@ -82,7 +82,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: racesoon', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2) {
+        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
             race = races[i];
             break;
         }
@@ -100,7 +100,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: raceend', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2) {
+        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
             race = races[i];
             break;
         }
@@ -132,7 +132,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: matchend', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2) {
+        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
             race = races[i];
             break;
         }
