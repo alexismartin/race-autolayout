@@ -189,7 +189,7 @@ NDAL = {
 						}
 					}
 					if(data.timer) {
-						this.timer.start(parseInt(data.timer, 10) - delay);
+						this.timer.start(parseInt(data.timer, 10) - this.options.delay);
 					} else {
 						this.timer.setup();
 					}
