@@ -7,7 +7,8 @@ NDAL = {
 		showLutes: true,
 		bg: 'cawmunity',
 		lutes: 'default',
-		rtmp: 'rtmp.condorleague.tv/_racer_/live'
+		rtmp: 'rtmp.condorleague.tv/_racer_/live',
+		cawmentary: []
 	},
 	init: function() {
 		this.initOptions();
@@ -32,6 +33,10 @@ NDAL = {
 		}
 
 		this.initCSS();
+
+		if(this.options.cawmentary.length) {
+			this.initCawmentary();
+		}
 
 		if(EventSource) {
 			var es = new EventSource("http://necrommunity.ovh:8080/sse");
@@ -80,6 +85,9 @@ NDAL = {
 			}
 			if(options[5]) {
 				this.options.lutes = options[5];
+			}
+			if(options[6]) {
+				this.options.cawmentary = options[6].split('/');
 			}
 		}
 	},
@@ -139,6 +147,9 @@ NDAL = {
 				$('#player').html('Flash not found, Sorry');
 			}			
 		}
+	},
+	initCawmentary: function() {
+		$('.cawmentary').html('Cawmentary by:<div class="name">'+this.options.cawmentary.join('</div><div class="name">')+'</div>');
 	},
 	initCSS: function() {
 		var sheet = document.getElementById('maincss').sheet;
