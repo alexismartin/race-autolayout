@@ -116,14 +116,14 @@ input {
 
 .cawmentary {
 	position: absolute;
-	top: 84.7%;
+	top: 82.7%;
 	left: 1.1%;
 	line-height: 1.4vw;
 	font-size: 1.6vw;
 }
 
 .cawmentary .name:first-child {
-	margin-top: 2%;
+	margin-top: 3%;
 }
 
 .timer {

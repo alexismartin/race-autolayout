@@ -149,7 +149,7 @@ NDAL = {
 		}
 	},
 	initCawmentary: function() {
-		$('.cawmentary').html('Cawmentary by:<div class="name">'+this.options.cawmentary.join('</div><div class="name">')+'</div>');
+		$('.cawmentary').html('Cawmentary:<div class="name">'+this.options.cawmentary.join('</div><div class="name">')+'</div>');
 	},
 	initCSS: function() {
 		var sheet = document.getElementById('maincss').sheet;
