@@ -55,10 +55,13 @@ NDAL = {
 				}
 			}
 			if(options[1]) {
-				this.options.delay = parseInt(options[1], 10);
+				this.options.rtmp = options[1];
 			}
 			if(options[2]) {
-				var opt = options[2].split('');
+				this.options.delay = parseInt(options[2], 10);
+			}
+			if(options[3]) {
+				var opt = options[3].split('');
 				if(opt[0]) {
 					this.options.streams = (opt[0] === '1');
 				}
@@ -72,14 +75,11 @@ NDAL = {
 					this.options.showLutes = (opt[3] === '1');
 				}
 			}
-			if(options[3]) {
-				this.options.bg = options[3];
-			}
 			if(options[4]) {
-				this.options.lutes = options[4];
+				this.options.bg = options[4];
 			}
 			if(options[5]) {
-				this.options.rtmp = options[5];
+				this.options.lutes = options[5];
 			}
 		}
 	},
@@ -149,7 +149,6 @@ NDAL = {
 		sheet.insertRule('.background {	background-image: url(../img/backgrounds/'+this.options.bg+'.png);}', sheet.cssRules.length);
 	},
 	getRTMPLink: function(racer) {
-		console.log(this.options.rtmp.replace('_racer_', racer));
 		return this.options.rtmp.replace('_racer_', racer);
 	},
 	isMessageForThisRace: function(data) {
