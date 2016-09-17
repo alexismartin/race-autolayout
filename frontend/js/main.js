@@ -45,7 +45,7 @@ NDAL = {
 	initOptions: function() {
 		var hash = window.location.hash.substr(1);
 		if(hash) {
-			var options = hash.split('|');
+			var options = hash.split(',');
 			if(options[0]) {
 				var racers = options[0].split('/');
 				if(racers.length == 2 ) {
@@ -166,7 +166,7 @@ NDAL = {
 				if(!this.racer1) {
 					if(data.multi) {
 						var multi = 'Multiple races going on, click on one:<br><br><br>',
-							options = window.location.hash.match(/\|.*/) || '';
+							options = window.location.hash.match(/\,.*/) || '';
 						for (var i = 0; i < data.races.length; i++) {
 							var race = data.races[i];
 							multi += race.racers[0].toLowerCase() + ' ' + (race.score[0]||0) + ' - ' + (race.score[1]||0) + ' ' + race.racers[1].toLowerCase() +
