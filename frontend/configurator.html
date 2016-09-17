@@ -32,6 +32,9 @@
 		<p>
 			<label for="lutes">Lutes</label> <input type="text" id="lutes" value="default">
 		</p>
+		<p>
+			<label for="rtmp">RTMP server</label> <input type="text" id="rtmp" value="rtmp.condorleague.tv/_racer_/live">
+		</p>
 
 	</form>
 	<a href="/" class="link">Watch</a>
@@ -45,7 +48,7 @@
 			if(racer1 && racer2) {
 				link += racer1 + '/' + racer2;
 			}
-			link+='|'+$('#delay').val()+'|'+($('#streams').is(':checked')?'1':'0')+($('#streamBG').is(':checked')?'1':'0')+($('#timer').is(':checked')?'1':'0')+($('#show-lutes').is(':checked')?'1':'0')+'|'+$('#bg').val()+'|'+$('#lutes').val();
+			link+='|'+$('#delay').val()+'|'+($('#streams').is(':checked')?'1':'0')+($('#streamBG').is(':checked')?'1':'0')+($('#timer').is(':checked')?'1':'0')+($('#show-lutes').is(':checked')?'1':'0')+'|'+$('#bg').val()+'|'+$('#lutes').val()+'|'+$('#rtmp').val();
 			$('.link').attr('href', link);
 		};
 		$('.configurator').on('change', makeLink);

@@ -6,7 +6,8 @@ NDAL = {
 		timer: true,
 		showLutes: true,
 		bg: 'cawmunity',
-		lutes: 'default'
+		lutes: 'default',
+		rtmp: 'rtmp.condorleague.tv/_racer_/live'
 	},
 	init: function() {
 		this.initOptions();
@@ -75,7 +76,10 @@ NDAL = {
 				this.options.bg = options[3];
 			}
 			if(options[4]) {
-				this.options.lutes = options[4];	
+				this.options.lutes = options[4];
+			}
+			if(options[5]) {
+				this.options.rtmp = options[5];
 			}
 		}
 	},
@@ -86,14 +90,14 @@ NDAL = {
 			if(navigator.mimeTypes['application/x-shockwave-flash']) {
 				jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
 				jwplayer('racer-left-player').setup({
-					file: "rtmp://rtmp.condorleague.tv/"+this.racer1+"/live",
+					file: "rtmp://"+this.getRTMPLink(this.racer1),
 					autostart: true,
 					title: this.racer1+" RTMP",
 					height: "100%",
 					width: "100%"
 				});
 				jwplayer('racer-right-player').setup({
-					file: "rtmp://rtmp.condorleague.tv/"+this.racer2+"/live",
+					file: "rtmp://"+this.getRTMPLink(this.racer2),
 					autostart: true,
 					title: this.racer2+" RTMP",
 					height: "100%",
@@ -101,11 +105,11 @@ NDAL = {
 				});
 			} else {
 				if(/android/i.test(navigator.userAgent)) {
-					$('#racer-left-player').html('Flash not found, <a href="intent://rtmp.condorleague.tv/'+this.racer1+'/live/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
-					$('#racer-right-player').html('Flash not found, <a href="intent://rtmp.condorleague.tv/'+this.racer2+'/live/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
+					$('#racer-left-player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.racer1)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
+					$('#racer-right-player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.racer2)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
 				} else if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-					$('#racer-left-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://rtmp.condorleague.tv/'+this.racer1+'/live">Open in iOS VLC</a>');
-					$('#racer-right-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://rtmp.condorleague.tv/'+this.racer2+'/live">Open in iOS VLC</a>');
+					$('#racer-left-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.racer1)+'">Open in iOS VLC</a>');
+					$('#racer-right-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.racer2)+'">Open in iOS VLC</a>');
 				} else {
 					$('#racer-left-player').html('Flash not found, Sorry');
 					$('#racer-right-player').html('Flash not found, Sorry');
@@ -120,7 +124,7 @@ NDAL = {
 		if(navigator.mimeTypes['application/x-shockwave-flash']) {
 			jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
 			jwplayer('player').setup({
-				file: "rtmp://rtmp.condorleague.tv/"+this.options.singleRacer+"/live",
+				file: "rtmp://"+this.getRTMPLink(this.options.singleRacer),
 				autostart: true,
 				title: this.options.singleRacer+" RTMP",
 				aspectratio: "16:9",
@@ -128,9 +132,9 @@ NDAL = {
 			});
 		} else {
 			if(/android/i.test(navigator.userAgent)) {
-				$('#player').html('Flash not found, <a href="intent://rtmp.condorleague.tv/'+this.options.singleRacer+'/live/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
+				$('#player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.options.singleRacer)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
 			} else if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-				$('#player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://rtmp.condorleague.tv/'+this.options.singleRacer+'/live">Open in iOS VLC</a>');
+				$('#player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.options.singleRacer)+'">Open in iOS VLC</a>');
 			} else {
 				$('#player').html('Flash not found, Sorry');
 			}			
@@ -143,6 +147,10 @@ NDAL = {
 			sheet.insertRule('.lr'+i+' { background-image: url(../img/lutes/'+this.options.lutes+'/lute-right-'+i+'.png);}', sheet.cssRules.length);
 		}
 		sheet.insertRule('.background {	background-image: url(../img/backgrounds/'+this.options.bg+'.png);}', sheet.cssRules.length);
+	},
+	getRTMPLink: function(racer) {
+		console.log(this.options.rtmp.replace('_racer_', racer));
+		return this.options.rtmp.replace('_racer_', racer);
 	},
 	isMessageForThisRace: function(data) {
 		return (this.racer1 == data.racers[0].toLowerCase() && this.racer2 == data.racers[1].toLowerCase()) || (this.racer1 == data.racers[1].toLowerCase() && this.racer2 == data.racers[0].toLowerCase());
