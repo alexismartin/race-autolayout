@@ -62,7 +62,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: racestart', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
+        if(!races[i].ended && (data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2)) {
             race = races[i];
             break;
         }
@@ -82,7 +82,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: racesoon', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
+        if(!races[i].ended && (data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2)) {
             race = races[i];
             break;
         }
@@ -100,7 +100,7 @@ io.on('connection', function(socket){
     console.log('RECEIVED: raceend', data);
     var race = false;
     for(var i = 0; i < races.length; i++) {
-        if(data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2) {
+        if(!races[i].ended && (data.racer1 == races[i].racer1 && data.racer2 == races[i].racer2 || data.racer2 == races[i].racer1 && data.racer1 == races[i].racer2)) {
             race = races[i];
             break;
         }
