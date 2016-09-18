@@ -22,7 +22,7 @@ a:visited {
 }
 
 .stream-bg {
-	background-color: #0f0;
+	background-color: transparent;
 }
 
 .loading, .config {
