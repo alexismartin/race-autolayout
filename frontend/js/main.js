@@ -17,11 +17,16 @@ NDAL = {
 			window.location.reload();
 		});
 
+		this.racers = [];
+
 		if(this.options.racers) {
-			this.racer1 = this.options.racers[0].toLowerCase();
-			this.racer2 = this.options.racers[1].toLowerCase();
-			this.racer1points = 0;
-			this.racer2points = 0;
+			this.racers = [];
+			for (var i = 0, len = this.options.racers.length; i < len; i++) {
+				this.racers[i] = {
+					name: this.options.racers[i].toLowerCase(),
+					points: 0
+				};
+			}
 			this.initRacers();
 		} else if(this.options.singleRacer) {
 			this.initSingleRacer();
@@ -53,7 +58,7 @@ NDAL = {
 			var options = hash.split(',');
 			if(options[0]) {
 				var racers = options[0].split('/');
-				if(racers.length == 2 ) {
+				if(racers.length >= 2 ) {
 					this.options.racers = racers;
 				} else {
 					this.options.singleRacer = racers[0].toLowerCase();
@@ -92,40 +97,34 @@ NDAL = {
 		}
 	},
 	initRacers: function() {
-		$('.left-racer-name').html(this.racer1);
-		$('.right-racer-name').html(this.racer2);
-		if(this.options.streams) {
-			if(navigator.mimeTypes['application/x-shockwave-flash']) {
-				jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
-				jwplayer('racer-left-player').setup({
-					file: "rtmp://"+this.getRTMPLink(this.racer1),
-					autostart: true,
-					title: this.racer1+" RTMP",
-					height: "100%",
-					width: "100%"
-				});
-				jwplayer('racer-right-player').setup({
-					file: "rtmp://"+this.getRTMPLink(this.racer2),
-					autostart: true,
-					title: this.racer2+" RTMP",
-					height: "100%",
-					width: "100%"
-				});
-			} else {
-				if(/android/i.test(navigator.userAgent)) {
-					$('#racer-left-player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.racer1)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
-					$('#racer-right-player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.racer2)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
-				} else if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-					$('#racer-left-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.racer1)+'">Open in iOS VLC</a>');
-					$('#racer-right-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.racer2)+'">Open in iOS VLC</a>');
+		for (var i = 0, len = this.racers.length; i < len; i++) {
+			$('.racers-player').append('<div class="racer racer-'+i+'"><div class="player" id="racer-'+i+'-player"></div></div>');
+			$('.racers-name').append('<div class="racer-name racer-'+i+'-name">'+this.racers[i].name+'</div>');
+			$('.layout').append('<div class="points racer-'+i+'-points">0</div>');
+
+			if(this.options.streams) {
+				if(navigator.mimeTypes['application/x-shockwave-flash']) {
+					jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
+					jwplayer('racer-'+i+'-player').setup({
+						file: "rtmp://"+this.getRTMPLink(this.racers[i].name),
+						autostart: true,
+						title: this.racers[i].name+" RTMP",
+						height: "100%",
+						width: "100%"
+					});
 				} else {
-					$('#racer-left-player').html('Flash not found, Sorry');
-					$('#racer-right-player').html('Flash not found, Sorry');
-				}			
+					if(/android/i.test(navigator.userAgent)) {
+						$('#racer-'+i+'-player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.racers[i].name)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
+					} else if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+						$('#racer-'+i+'-player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.racers[i].name)+'">Open in iOS VLC</a>');
+					} else {
+						$('#racer-'+i+'-player').html('Flash not found, Sorry');
+					}
+				}
 			}
 		}
 		$('.loading').hide();
-		$('.layout').show();
+		$('.layout').addClass('race-'+this.racers.length+'-way').show();
 	},
 	initSingleRacer: function() {
 		$('.loading').html('<h2>'+this.options.singleRacer+'</h2><div id="player"></div>');
@@ -145,7 +144,7 @@ NDAL = {
 				$('#player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.options.singleRacer)+'">Open in iOS VLC</a>');
 			} else {
 				$('#player').html('Flash not found, Sorry');
-			}			
+			}
 		}
 	},
 	initCawmentary: function() {
@@ -154,8 +153,8 @@ NDAL = {
 	initCSS: function() {
 		var sheet = document.getElementById('maincss').sheet;
 		for (var i = 1; i < 8; i++) {
-			sheet.insertRule('.ll'+i+' { background-image: url(../img/lutes/'+this.options.lutes+'/lute-left-'+i+'.png);}', sheet.cssRules.length);
-			sheet.insertRule('.lr'+i+' { background-image: url(../img/lutes/'+this.options.lutes+'/lute-right-'+i+'.png);}', sheet.cssRules.length);
+			sheet.insertRule('.l0'+i+' { background-image: url(../img/lutes/'+this.options.lutes+'/lute-left-'+i+'.png);}', sheet.cssRules.length);
+			sheet.insertRule('.l1'+i+' { background-image: url(../img/lutes/'+this.options.lutes+'/lute-right-'+i+'.png);}', sheet.cssRules.length);
 		}
 		sheet.insertRule('.background {	background-image: url(../img/backgrounds/'+this.options.bg+'.png);}', sheet.cssRules.length);
 	},
@@ -163,7 +162,7 @@ NDAL = {
 		return this.options.rtmp.replace('_racer_', racer);
 	},
 	isMessageForThisRace: function(data) {
-		return (this.racer1 == data.racers[0].toLowerCase() && this.racer2 == data.racers[1].toLowerCase()) || (this.racer1 == data.racers[1].toLowerCase() && this.racer2 == data.racers[0].toLowerCase());
+		return this.racers.length == data.racers.length && $(data.racers).not(this.racers.map(function(el) { return el.name.toLowerCase()})).length === 0;
 	},
 	serverMessage: function(event) {
 		this.showError = false;
@@ -174,7 +173,7 @@ NDAL = {
 				break;
 			case 'init':
 				var data = message.data;
-				if(!this.racer1) {
+				if(!this.racers.length) {
 					if(data.multi) {
 						var multi = 'Multiple races going on, click on one:<br><br><br>',
 							options = window.location.hash.match(/\,.*/) || '';
@@ -186,8 +185,12 @@ NDAL = {
 						$('.loading').html(multi);
 						break;
 					}
-					this.racer1 = data.racers[0].toLowerCase();
-					this.racer2 = data.racers[1].toLowerCase();
+					for (var i = 0, len = data.racers.length; i < len; i++) {
+						this.racers.push({
+							name: data.racers[i].toLowerCase(),
+							points: 0
+						});
+					}
 					this.initRacers();
 				}
 				if(data.multi) {
@@ -199,8 +202,6 @@ NDAL = {
 					}
 				}
 				if(this.isMessageForThisRace(data)) {
-					this.racer1points = 0;
-					this.racer2points = 0;
 					for(var j = 0; j < 2; j++) {
 						for(var i = 0; i < data.score[j]; i++) {
 							this.addLute(data.racers[j].toLowerCase());
@@ -218,7 +219,7 @@ NDAL = {
 				if(this.isMessageForThisRace(data)) {
 					window.setTimeout(function(){
 						this.timer.start();
-					}.bind(this), this.options.delay);					
+					}.bind(this), this.options.delay);
 				}
 				break;
 			case 'end':
@@ -233,8 +234,17 @@ NDAL = {
 		}
 	},
 	addLute: function(racer) {
-		var position = racer == this.racer1 ? 'l' : 'r',
-			points = racer == this.racer1 ? ++this.racer1points : ++this.racer2points;
+		var position = -1,
+			points = 0;
+		for (var i = 0, len = this.racers.length; i < len; i++) {
+			if(this.racers[i].name == racer) {
+				position = i;
+				points = ++this.racers[i].points;
+				break;
+			}
+		}
+		if(position === -1) return;
+		$('.racer-'+position+'-points').html(points);
 		if(!this.options.showLutes) return;
 		$('.lutes').append('<div class="lute l'+position+points+'"/>')
 	},

@@ -58,23 +58,23 @@ input {
 .background {
 	background-image: url(../img/backgrounds/cawmunity.png);
 	background-repeat: no-repeat;
-	background-size: 100%; 
+	background-size: 100%;
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
 }
 
-.racer {
+.race-2-way .racer {
 	box-sizing: border-box;
 	position: absolute;
 	width: 50%;
 	top: 31.56%;
-    bottom: 19.6%;
+	bottom: 19.6%;
 }
 
 
-.left-racer-name, .right-racer-name {
+.race-2-way .racer-name {
 	box-sizing: border-box;
 	position: absolute;
 	width: 50%;
@@ -84,25 +84,111 @@ input {
 	top: 23%;
 }
 
-.left-racer-name, 
-.left-racer {
+.race-2-way .racer-0-name,
+.race-2-way .racer-0 {
 	left: 0;
 	padding-right: .3%;
 	padding-left: .8%;
 }
 
-.right-racer-name,
-.right-racer {
+.race-2-way .racer-1-name,
+.race-2-way .racer-1 {
 	right: 0;
 	padding-left: .3%;
 	padding-right: .8%;
 }
 
-.player {
+
+.race-3-way .racer,
+.race-4-way .racer {
+	box-sizing: border-box;
+	position: absolute;
+	width: 50%;
+}
+
+
+.race-3-way .racer-name,
+.race-4-way .racer-name {
+	box-sizing: border-box;
+	position: absolute;
+	text-align: center;
+	font-size: 2vw;
+	line-height: 2vw;
+}
+
+.race-3-way .racer-0-name,
+.race-4-way .racer-0-name {
+	top: 46.5%;
+	width: 19.6%;
+	left: 28.2%;
+}
+
+.race-3-way .racer-0,
+.race-4-way .racer-0 {
+	left: 0;
+	padding-right: 1.1%;
+	padding-left: 4.7%;
+	padding-top: .8%;
+}
+
+.race-3-way .racer-1-name,
+.race-4-way .racer-1-name {
+	top: 46.5%;
+	width: 19.6%;
+	right: 28.2%;
+}
+
+.race-3-way .racer-1,
+.race-4-way .racer-1 {
+	right: 0;
+	padding-left: 1.1%;
+	padding-right: 4.7%;
+	padding-top: .8%;
+}
+
+.race-3-way .racer-2-name,
+.race-4-way .racer-2-name {
+	top: 47.4%;
+	width: 20.4%;
+	left: 4.7%;
+}
+
+.race-3-way .racer-2,
+.race-4-way .racer-2 {
+	left: 0;
+	bottom: 4%;
+	padding-right: 1.1%;
+	padding-left: 4.7%;
+}
+
+.race-4-way .racer-3-name {
+	top: 47.4%;
+	width: 20.4%;
+	right: 4.7%;
+}
+
+.race-4-way .racer-3 {
+	right: 0;
+	bottom: 4%;
+	padding-left: 1.1%;
+	padding-right: 4.7%;
+}
+
+
+.race-2-way .player {
 	width: 100%;
 	height: 27.5vw;
 	text-align: center;
 	line-height: 27.5vw;
+	font-size: 2vw;
+}
+
+.race-3-way .player,
+.race-4-way .player {
+	width: 100%;
+	height: 25.3vw;
+	text-align: center;
+	line-height: 25.3vw;
 	font-size: 2vw;
 }
 
@@ -113,11 +199,11 @@ input {
 	width: 100%;
 	height: 100%;
 	background-repeat: no-repeat;
-	background-size: 100%; 
+	background-size: 100%;
 	pointer-events: none;
 }
 
-.cawmentary {
+.race-2-way .cawmentary {
 	position: absolute;
 	top: 82.7%;
 	left: 1.1%;
@@ -125,11 +211,11 @@ input {
 	font-size: 1.6vw;
 }
 
-.cawmentary .name:first-child {
+.race-2-way .cawmentary .name:first-child {
 	margin-top: 3%;
 }
 
-.timer {
+.race-2-way .timer {
 	position: absolute;
 	top: 82.2%;
 	bottom: 10.6%;
@@ -140,8 +226,65 @@ input {
 	font-size: 3vw;
 }
 
-.timer span {
+.race-2-way .timer span {
 	display: inline-block;
 	width: 1.8vw;
 	text-align: center;
+}
+
+.race-3-way .timer,
+.race-4-way .timer {
+	position: absolute;
+	top: 96%;
+	bottom: .6%;
+	left: 45%;
+	width: 10%;
+	text-align: center;
+	line-height: 2vw;
+	font-size: 2vw;
+}
+
+.race-3-way .timer span,
+.race-4-way .timer span {
+	display: inline-block;
+	width: 1.2vw;
+	text-align: center;
+}
+
+.race-2-way .points {
+	display: none;
+}
+
+.race-3-way .points,
+.race-4-way .points {
+	display: block;
+	position: absolute;
+	width: 2%;
+	text-align: center;
+	line-height: 3vw;
+	font-size: 2.5vw;
+}
+
+.race-3-way .racer-0-points,
+.race-4-way .racer-0-points {
+	left: 2.1%;
+	top: 6%;
+}
+
+.race-3-way .racer-1-points,
+.race-4-way .racer-1-points {
+	right: 2.1%;
+	top: 6%;
+}
+
+.race-3-way .racer-2-points,
+.race-4-way .racer-2-points {
+	left: 2.1%;
+	bottom: 8.5%;
+}
+
+.race-3-way .racer-3-points,
+.race-4-way .racer-3-points {
+	right: 2.1%;
+	bottom: 8.5%;
 }
