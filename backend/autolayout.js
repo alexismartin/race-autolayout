@@ -1,7 +1,12 @@
-var SSE = require('sse'), 
+var SSE = require('sse'),
+    https = require('https'),
     http = require('http');
- 
-var server = http.createServer(),
+
+var server = https.createServer({
+        key: fs.readFileSync('/etc/letsencrypt/live/necrommunity.ovh/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/necrommunity.ovh/fullchain.pem'),
+        ca: fs.readFileSync('/etc/letsencrypt/live/necrommunity.ovh/chain.pem')
+    }),
     serverIO = http.createServer();
 
 var io = require('socket.io')(serverIO);
@@ -31,7 +36,7 @@ var getInit = function(race) {
     if(!race) return false;
     else return {racers: [race.racer1, race.racer2], score: [race.points1||0, race.points2||0], timer: race.start?Date.now()-race.start:0};
 }
- 
+
 server.listen(8080, function() {
     var sse = new SSE(server);
     sse.on('connection', function(client) {

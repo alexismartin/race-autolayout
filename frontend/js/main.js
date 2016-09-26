@@ -44,7 +44,7 @@ NDAL = {
 		}
 
 		if(EventSource) {
-			var es = new EventSource("http://necrommunity.ovh:8080/sse");
+			var es = new EventSource("https://necrommunity.ovh:8080/sse");
 			es.onmessage = this.serverMessage.bind(this);
 			this.showError = true;
 			es.onerror = function() {
