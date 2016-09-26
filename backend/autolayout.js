@@ -1,6 +1,7 @@
 var SSE = require('sse'),
     https = require('https'),
-    http = require('http');
+    http = require('http'),
+    fs = require('fs');
 
 var server = https.createServer({
         key: fs.readFileSync('/etc/letsencrypt/live/necrommunity.ovh/privkey.pem'),
