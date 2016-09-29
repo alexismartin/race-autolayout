@@ -126,6 +126,8 @@ input {
 .race-3-way .racer-0,
 .race-4-way .racer-0 {
 	left: 0;
+	top: 0;
+	bottom: 53.4%;
 	padding-right: 1.1%;
 	padding-left: 4.7%;
 	padding-top: .8%;
@@ -141,6 +143,8 @@ input {
 .race-3-way .racer-1,
 .race-4-way .racer-1 {
 	right: 0;
+	top: 0;
+	bottom: 53.4%;
 	padding-left: 1.1%;
 	padding-right: 4.7%;
 	padding-top: .8%;
@@ -156,6 +160,7 @@ input {
 .race-3-way .racer-2,
 .race-4-way .racer-2 {
 	left: 0;
+	top: 51%;
 	bottom: 4%;
 	padding-right: 1.1%;
 	padding-left: 4.7%;
@@ -169,6 +174,7 @@ input {
 
 .race-4-way .racer-3 {
 	right: 0;
+	top: 51%;
 	bottom: 4%;
 	padding-left: 1.1%;
 	padding-right: 4.7%;
