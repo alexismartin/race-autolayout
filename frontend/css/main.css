@@ -198,6 +198,11 @@ input {
 	font-size: 2vw;
 }
 
+.player video {
+	width: 100%;
+	height: 100%;
+}
+
 .lute {
 	position: absolute;
 	top: 0;

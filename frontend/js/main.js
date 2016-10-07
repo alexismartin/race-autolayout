@@ -73,7 +73,7 @@ NDAL = {
 			if(options[3]) {
 				var opt = options[3].split('');
 				if(opt[0]) {
-					this.options.streams = (opt[0] === '1');
+					this.options.streams = (opt[0] === '0') ? false : opt[0];
 				}
 				if(opt[1]) {
 					this.options.streamBG = (opt[1] === '1');
@@ -96,13 +96,18 @@ NDAL = {
 			}
 		}
 	},
+	initMPEGDASH: function() {
+		if(this.dashInit) return;
+		$.getScript('//cdn.dashjs.org/latest/dash.all.min.js');
+		this.dashInit = true;
+	},
 	initRacers: function() {
 		for (var i = 0, len = this.racers.length; i < len; i++) {
 			$('.racers-player').append('<div class="racer racer-'+i+'"><div class="player" id="racer-'+i+'-player"></div></div>');
 			$('.racers-name').append('<div class="racer-name racer-'+i+'-name">'+this.racers[i].name+'</div>');
 			$('.layout').append('<div class="points racer-'+i+'-points">0</div>');
 
-			if(this.options.streams) {
+			if(this.options.streams === '1') {
 				if(navigator.mimeTypes['application/x-shockwave-flash']) {
 					jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
 					jwplayer('racer-'+i+'-player').setup({
@@ -121,30 +126,41 @@ NDAL = {
 						$('#racer-'+i+'-player').html('Flash not found, Sorry');
 					}
 				}
+			} else if(this.options.streams === '2') {
+				$('#racer-'+i+'-player').html('<video data-dashjs-player autoplay src="'+this.getDASHLink(this.racers[i].name)+'.mpd" controls></video>');
 			}
 		}
+		if(this.options.streams === '2') {
+			this.initMPEGDASH();
+		}
+
 		$('.loading').hide();
 		$('.layout').addClass('race-'+this.racers.length+'-way').show();
 	},
 	initSingleRacer: function() {
 		$('.loading').html('<h2>'+this.options.singleRacer+'</h2><div id="player"></div>');
-		if(navigator.mimeTypes['application/x-shockwave-flash']) {
-			jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
-			jwplayer('player').setup({
-				file: "rtmp://"+this.getRTMPLink(this.options.singleRacer),
-				autostart: true,
-				title: this.options.singleRacer+" RTMP",
-				aspectratio: "16:9",
-				width: "100%"
-			});
-		} else {
-			if(/android/i.test(navigator.userAgent)) {
-				$('#player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.options.singleRacer)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
-			} else if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-				$('#player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.options.singleRacer)+'">Open in iOS VLC</a>');
+		if(this.options.streams === '1') {
+			if(navigator.mimeTypes['application/x-shockwave-flash']) {
+				jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
+				jwplayer('player').setup({
+					file: "rtmp://"+this.getRTMPLink(this.options.singleRacer),
+					autostart: true,
+					title: this.options.singleRacer+" RTMP",
+					aspectratio: "16:9",
+					width: "100%"
+				});
 			} else {
-				$('#player').html('Flash not found, Sorry');
+				if(/android/i.test(navigator.userAgent)) {
+					$('#player').html('Flash not found, <a href="intent://'+this.getRTMPLink(this.options.singleRacer)+'/#Intent;scheme=rtmp;package=org.videolan.vlc;end">Open in Android VLC</a>');
+				} else if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+					$('#player').html('Flash not found, <a href="vlc-x-callback://x-callback-url/stream?url=rtmp://'+this.getRTMPLink(this.options.singleRacer)+'">Open in iOS VLC</a>');
+				} else {
+					$('#player').html('Flash not found, Sorry');
+				}
 			}
+		} else if(this.options.streams === '2') {
+			$('#player').html('<video data-dashjs-player autoplay src="'+this.getDASHLink(this.options.singleRacer)+'.mpd" controls></video>');
+			this.initMPEGDASH();
 		}
 	},
 	initCawmentary: function() {
@@ -160,6 +176,9 @@ NDAL = {
 	},
 	getRTMPLink: function(racer) {
 		return this.options.rtmp.replace('_racer_', racer);
+	},
+	getDASHLink: function(racer) {
+		return '//'+this.getRTMPLink(racer).replace('/','/dash/');
 	},
 	isMessageForThisRace: function(data) {
 		return this.racers.length == data.racers.length && $(data.racers).not(this.racers.map(function(el) { return el.name.toLowerCase()})).length === 0;
