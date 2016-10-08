@@ -1,7 +1,7 @@
 NDAL = {
 	options: {
 		delay: 0,
-		streams: true,
+		streams: '1',
 		streamBG: false,
 		timer: true,
 		showLutes: true,

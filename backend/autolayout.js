@@ -46,9 +46,9 @@ server.listen(8080, function() {
         if(init) client.send(JSON.stringify({type: 'init', data: init}));
         else client.send(JSON.stringify({type: 'norace'}));
 
-        client.on('close', function() {
-            clients.splice(clients.indexOf(client));
-        });
+        // client.on('close', function() {
+        //     clients.splice(clients.indexOf(client));
+        // });
     });
 });
 
