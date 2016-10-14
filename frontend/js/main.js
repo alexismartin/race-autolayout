@@ -8,7 +8,8 @@ NDAL = {
 		bg: 'cawmunity',
 		lutes: 'default',
 		rtmp: 'rtmp.condorleague.tv/_racer_/live',
-		cawmentary: []
+		cawmentary: [],
+		credentials: ['open', 'open']
 	},
 	init: function() {
 		this.initOptions();
@@ -94,6 +95,9 @@ NDAL = {
 			if(options[6]) {
 				this.options.cawmentary = options[6].split('/');
 			}
+			if(options[7]) {
+				this.options.credentials = options[7].split('/');
+			}
 		}
 	},
 	initMPEGDASH: function() {
@@ -175,7 +179,7 @@ NDAL = {
 		sheet.insertRule('.background {	background-image: url(../img/backgrounds/'+this.options.bg+'.png);}', sheet.cssRules.length);
 	},
 	getRTMPLink: function(racer) {
-		return this.options.rtmp.replace('_racer_', racer);
+		return this.options.rtmp.replace('_racer_', racer)+'?username='+this.options.credentials[0]+'&pass='+this.options.credentials[1];
 	},
 	getDASHLink: function(racer) {
 		return '//'+this.getRTMPLink(racer).replace('/','/dash/');
