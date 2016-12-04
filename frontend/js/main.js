@@ -139,6 +139,8 @@ NDAL = {
 			this.initMPEGDASH();
 		}
 
+		this.openMacSG(this.racers.map(function(racer) { return racer.name; }));
+
 		$('.loading').hide();
 		$('.layout').addClass('race-'+this.racers.length+'-way').show();
 	},
@@ -168,6 +170,11 @@ NDAL = {
 			$('#player').html('<video data-dashjs-player autoplay src="'+this.getDASHLink(this.options.singleRacer)+'.mpd" controls></video>');
 			this.initMPEGDASH();
 		}
+
+		this.openMacSG([this.options.singleRacer]);
+	},
+	openMacSG: function(racers) {
+		location.href = 'macsg:rtmp,' + racers.join(',');
 	},
 	initCawmentary: function() {
 		$('.cawmentary').html('Cawmentary:<div class="name">'+this.options.cawmentary.join('</div><div class="name">')+'</div>');
