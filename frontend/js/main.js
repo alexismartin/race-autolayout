@@ -119,7 +119,8 @@ NDAL = {
 						autostart: true,
 						title: this.racers[i].name+" RTMP",
 						height: "100%",
-						width: "100%"
+						width: "100%",
+						mute: true
 					});
 				} else {
 					if(/android/i.test(navigator.userAgent)) {
@@ -151,7 +152,8 @@ NDAL = {
 					autostart: true,
 					title: this.options.singleRacer+" RTMP",
 					aspectratio: "16:9",
-					width: "100%"
+					width: "100%",
+					mute: true
 				});
 			} else {
 				if(/android/i.test(navigator.userAgent)) {
