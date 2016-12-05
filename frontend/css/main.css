@@ -24,6 +24,11 @@ a:visited {
 	color: #aaa;
 }
 
+h2,
+.racer-name {
+	cursor: pointer;
+}
+
 .stream-bg {
 	background-color: transparent;
 }

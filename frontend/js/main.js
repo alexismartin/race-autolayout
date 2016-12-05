@@ -29,8 +29,18 @@ NDAL = {
 				};
 			}
 			this.initRacers();
+			new Clipboard('.racer-name', {
+				text: function(trigger) {
+					return trigger.getAttribute('data-rtmp');
+				}
+			});
 		} else if(this.options.singleRacer) {
 			this.initSingleRacer();
+			new Clipboard('h2', {
+				text: function(trigger) {
+					return trigger.getAttribute('data-rtmp');
+				}
+			});
 			return;
 		}
 
@@ -108,7 +118,7 @@ NDAL = {
 	initRacers: function() {
 		for (var i = 0, len = this.racers.length; i < len; i++) {
 			$('.racers-player').append('<div class="racer racer-'+i+'"><div class="player" id="racer-'+i+'-player"></div></div>');
-			$('.racers-name').append('<div class="racer-name racer-'+i+'-name">'+this.racers[i].name+'</div>');
+			$('.racers-name').append('<div class="racer-name racer-'+i+'-name" title="Click to copy '+this.racers[i].name+' RTMP URL" data-rtmp="rtmp://'+this.getRTMPLink(this.racers[i].name)+'">'+this.racers[i].name+'</div>');
 			$('.layout').append('<div class="points racer-'+i+'-points">0</div>');
 
 			if(this.options.streams === '1') {
@@ -145,7 +155,7 @@ NDAL = {
 		$('.layout').addClass('race-'+this.racers.length+'-way').show();
 	},
 	initSingleRacer: function() {
-		$('.loading').html('<h2>'+this.options.singleRacer+'</h2><div id="player"></div>');
+		$('.loading').html('<h2 title="Click to copy '+this.options.singleRacer+' RTMP URL" data-rtmp="rtmp://'+this.getRTMPLink(this.options.singleRacer)+'">'+this.options.singleRacer+'</h2><div id="player"></div>');
 		if(this.options.streams === '1') {
 			if(navigator.mimeTypes['application/x-shockwave-flash']) {
 				jwplayer.key="sE55hjyvUkJRzT/MepMYgSd3uVh7nSALNszoXg==";
