@@ -184,7 +184,10 @@ NDAL = {
 		this.openMacSG([this.options.singleRacer]);
 	},
 	openMacSG: function(racers) {
-		location.href = 'macsg:rtmp,' + racers.join(',');
+		var uri = 'macsg:rtmp,' + racers.join(',');
+		protocolCheck(uri, function() {}, function() {
+			location.href = uri;
+		});
 	},
 	initCawmentary: function() {
 		$('.cawmentary').html('Cawmentary:<div class="name">'+this.options.cawmentary.join('</div><div class="name">')+'</div>');
