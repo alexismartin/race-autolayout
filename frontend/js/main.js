@@ -184,6 +184,7 @@ NDAL = {
 		this.openMacSG([this.options.singleRacer]);
 	},
 	openMacSG: function(racers) {
+		return;
 		var uri = 'macsg:rtmp,' + racers.join(',');
 		protocolCheck(uri, function() {}, function() {
 			location.href = uri;
