@@ -130,9 +130,6 @@ NDAL = {
 						title: this.racers[i].name+" RTMP",
 						height: "100%",
 						width: "100%",
-						rtmp: {
-							subscribe: true
-						},
 						mute: true
 					});
 				} else {
@@ -168,9 +165,6 @@ NDAL = {
 					title: this.options.singleRacer+" RTMP",
 					aspectratio: "16:9",
 					width: "100%",
-					rtmp: {
-						subscribe: true
-					},
 					mute: true
 				});
 			} else {
@@ -190,7 +184,6 @@ NDAL = {
 		this.openMacSG([this.options.singleRacer]);
 	},
 	openMacSG: function(racers) {
-		return;
 		var uri = 'macsg:rtmp,' + racers.join(',');
 		protocolCheck(uri, function() {}, function() {
 			location.href = uri;
