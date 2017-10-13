@@ -108,6 +108,9 @@ NDAL = {
 			if(options[7]) {
 				this.options.credentials = options[7].split('/');
 			}
+		} else {
+			// redirect to website homepage if no conf passed
+			location.href = 'home';
 		}
 	},
 	initMPEGDASH: function() {
